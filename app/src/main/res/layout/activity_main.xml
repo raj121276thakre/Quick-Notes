@@ -15,8 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/page_title"
-            android:text="Notes"
-            android:textSize="32sp"
+            android:text="All Notes"
+            android:textSize="29sp"
             android:textColor="@color/white"
             android:textStyle="bold"/>
 
@@ -37,7 +37,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/title_bar_layout"
-        android:id="@+id/recyler_view"/>
+        android:id="@+id/recyler_view">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,6 +52,15 @@
         android:src="@drawable/ic_baseline_add_24"
         />
 
+    <LinearLayout
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        />
 
 
 </RelativeLayout>

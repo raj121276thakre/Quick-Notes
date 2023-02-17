@@ -28,6 +28,8 @@ public class NoteDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_details);
 
+        getSupportActionBar().hide();
+
         titleEditText = findViewById(R.id.notes_title_text);
         contentEditText = findViewById(R.id.notes_content_text);
         saveNoteBtn = findViewById(R.id.save_note_btn);

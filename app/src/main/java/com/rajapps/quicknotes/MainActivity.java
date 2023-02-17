@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
@@ -14,6 +15,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.Query;
+import com.rajapps.quicknotes.ads.Admob;
+import com.rajapps.quicknotes.ads.OnDismiss;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,11 +30,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Admob.setBanner(findViewById(R.id.banner),MainActivity.this); // banner ads
+
+        getSupportActionBar().hide();
+
         addNoteBtn = findViewById(R.id.add_note_btn);
         recyclerView = findViewById(R.id.recyler_view);
         menuBtn = findViewById(R.id.menu_btn);
 
-        addNoteBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this,NoteDetailsActivity.class)) );
+       // addNoteBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this,NoteDetailsActivity.class)) );
+        addNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Admob(new OnDismiss(){
+                    @Override
+                    public void onDismiss(){
+                        // code to run
+
+                        startActivity(new Intent(MainActivity.this,NoteDetailsActivity.class));
+                        //
+                    }
+
+                }).showIntCall(MainActivity.this,true);
+
+
+
+            }
+        });
+
+
+
         menuBtn.setOnClickListener((v)->showMenu() );
         setupRecyclerView();
     }
