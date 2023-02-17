@@ -10,14 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/my_primary"
         android:id="@+id/title_bar_layout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/page_title"
             android:text="All Notes"
+            android:paddingLeft="8dp"
             android:textSize="29sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold"/>
 
         <ImageButton
@@ -27,7 +30,7 @@
             android:src="@drawable/ic_baseline_menu_24"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            app:tint="@color/white"
+            app:tint="@color/black"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
 
@@ -36,6 +39,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/title_bar_layout"
         android:id="@+id/recyler_view">
 
