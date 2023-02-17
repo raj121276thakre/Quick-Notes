@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "471611406846",
+    "project_id": "quick-notes-a6b31",
+    "storage_bucket": "quick-notes-a6b31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471611406846:android:7b9c83c7256829cd3868af",
+        "android_client_info": {
+          "package_name": "com.rajapps.quicknotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471611406846-2bi64nk544gjqm79l20rn53g5cmpms7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3o2qXvdxvWbLuUllY9DL07XNR5UulZxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471611406846-2bi64nk544gjqm79l20rn53g5cmpms7p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
