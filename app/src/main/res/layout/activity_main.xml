@@ -7,6 +7,7 @@
     android:background="@color/my_primary"
     android:padding="16dp"
     tools:context=".MainActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +38,8 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/my_primary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
@@ -57,12 +60,11 @@
         />
 
     <LinearLayout
-        android:id="@+id/banner"
-        android:layout_width="wrap_content"
+        android:id="@+id/banner_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
-        android:layout_centerHorizontal="true"
+       android:layout_margin="1dp"
         android:layout_alignParentBottom="true"
         />
 

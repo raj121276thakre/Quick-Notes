@@ -13,9 +13,35 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
+
+public class Admob {
+
+    public static void loadAds(LinearLayout container , Context context){
+
+            MobileAds.initialize(context, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) { }
+            });
+
+            AdView adview = new AdView(context);
+            adview.setAdUnitId(AdsUnit.banner);
+            container.addView(adview);
+            AdRequest adRequest= new AdRequest.Builder().build();
+            adview.setAdSize(AdSize.BANNER);
+            adview.loadAd(adRequest);
+
+    }
+
+
+}
+
+//'''''''''''''''''''''''old code ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+/*
 public class Admob {
 
     OnDismiss onDismiss;
@@ -118,3 +144,4 @@ public class Admob {
 
 
 }
+*/

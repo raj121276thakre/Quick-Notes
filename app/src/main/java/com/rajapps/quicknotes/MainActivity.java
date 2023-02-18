@@ -1,5 +1,6 @@
 package com.rajapps.quicknotes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,13 +10,21 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.Query;
 import com.rajapps.quicknotes.ads.Admob;
+import com.rajapps.quicknotes.ads.AdsUnit;
 import com.rajapps.quicknotes.ads.OnDismiss;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,12 +34,14 @@ public class MainActivity extends AppCompatActivity {
     ImageButton menuBtn;
     NoteAdapter noteAdapter;
 
+    InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Admob.setBanner(findViewById(R.id.banner),MainActivity.this); // banner ads
+        //Admob.setBanner(findViewById(R.id.banner_main),MainActivity.this); // banner ads
 
         getSupportActionBar().hide();
 
@@ -39,31 +50,74 @@ public class MainActivity extends AppCompatActivity {
         menuBtn = findViewById(R.id.menu_btn);
 
        // addNoteBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this,NoteDetailsActivity.class)) );
-        addNoteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        addNoteBtn.setOnClickListener(v -> {
 
-                new Admob(new OnDismiss(){
+            if (mInterstitialAd != null) {
+               mInterstitialAd.show(MainActivity.this);
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                     @Override
-                    public void onDismiss(){
-                        // code to run
+                    public void onAdDismissedFullScreenContent() {
+                        super.onAdDismissedFullScreenContent();
 
-                        startActivity(new Intent(MainActivity.this,NoteDetailsActivity.class));
-                        //
+                        mInterstitialAd = null;
+                        loadInter();
+                        startActivity(new Intent(MainActivity.this, NoteDetailsActivity.class));
+
                     }
 
-                }).showIntCall(MainActivity.this,true);
+
+                });
 
 
+
+            }else {
+                startActivity(new Intent(MainActivity.this, NoteDetailsActivity.class));
 
             }
+
+
         });
 
 
+//.....
 
         menuBtn.setOnClickListener((v)->showMenu() );
         setupRecyclerView();
+
+        //banner ads
+        LinearLayout banner = findViewById(R.id.banner_main);
+        Admob.loadAds(banner, MainActivity.this);
+        loadInter();
+
+    }//.......................................
+
+    private void loadInter() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, AdsUnit.interstitial, adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                      //  Toast.makeText(MainActivity.this, "ads is Loaded.....", Toast.LENGTH_SHORT).show(); //
+
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        mInterstitialAd = null;
+                    }
+                });
+
+
     }
+
+
+
+
 
     void showMenu(){
         PopupMenu popupMenu  = new PopupMenu(MainActivity.this,menuBtn);
