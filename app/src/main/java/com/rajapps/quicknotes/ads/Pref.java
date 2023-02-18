@@ -3,6 +3,7 @@ package com.rajapps.quicknotes.ads;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+// this class is used to store the ads id's
 public class Pref {
 
     public static void setPref(String data, String key, Context context){
