@@ -5,9 +5,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 public class AdsUnit {
 
     public static String appId = "appId"; //app id
-    public static String interstitial = "interstitial"; //interstitial
+    public static String interstitial ="interstitial"; //interstitial
 
-    public static String banner="banner"; //banner
+    public static String banner="banner";   //banner
 
 
 

@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rajapps.quicknotes.ads.Admob;
 import com.rajapps.quicknotes.ads.AdsUnit;
+import com.rajapps.quicknotes.ads.Pref;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -48,17 +49,17 @@ public class SplashActivity extends AppCompatActivity {
                 String banner = snapshot.child("banner").getValue(String.class);
                 String interstitial = snapshot.child("interstitial").getValue(String.class);
 
-                AdsUnit.appId=app_id;
-                AdsUnit.banner = banner;
-                AdsUnit.interstitial = interstitial;
+                Pref.setPref(app_id,AdsUnit.appId,SplashActivity.this);
+                Pref.setPref(banner,AdsUnit.banner,SplashActivity.this);
+                Pref.setPref(interstitial,AdsUnit.interstitial,SplashActivity.this);
 
                 // app id change
                 try {
                     ApplicationInfo applicationInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
                     Bundle bundle = applicationInfo.metaData;
-                    applicationInfo.metaData.putString("com.google.android.gms.ads.APPLICATION_ID",AdsUnit.appId);
+                    applicationInfo.metaData.putString("com.google.android.gms.ads.APPLICATION_ID",Pref.getPref(AdsUnit.appId, SplashActivity.this));
                     String apiKey = bundle.getString("com.google.android.gms.ads.APPLICATION_ID");
-                    Log.d("AppID", "The saved id is " + AdsUnit.appId);
+                    Log.d("AppID", "The saved id is " + Pref.getPref(AdsUnit.appId, SplashActivity.this));
                     Log.d("AppID", "The saved id is " + apiKey);
 
                 } catch (PackageManager.NameNotFoundException e) {

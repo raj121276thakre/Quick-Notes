@@ -29,7 +29,7 @@ public class Admob {
             });
 
             AdView adview = new AdView(context);
-            adview.setAdUnitId(AdsUnit.banner);
+            adview.setAdUnitId(Pref.getPref(AdsUnit.banner,context));
             container.addView(adview);
             AdRequest adRequest= new AdRequest.Builder().build();
             adview.setAdSize(AdSize.BANNER);

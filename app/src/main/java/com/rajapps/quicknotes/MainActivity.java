@@ -26,6 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.rajapps.quicknotes.ads.Admob;
 import com.rajapps.quicknotes.ads.AdsUnit;
 import com.rajapps.quicknotes.ads.OnDismiss;
+import com.rajapps.quicknotes.ads.Pref;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadInter() {
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        InterstitialAd.load(this, AdsUnit.interstitial, adRequest,
+        InterstitialAd.load(this, Pref.getPref(AdsUnit.interstitial, MainActivity.this), adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
