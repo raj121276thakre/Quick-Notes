@@ -9,16 +9,40 @@
     android:background="@drawable/rounded_corner"
     >
 
-    <TextView
-
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/note_title_text_view"
-        android:text="note title"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginVertical="4dp"/>
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/note_title_text_view"
+            android:text="note title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+
+          >
+
+
+
+        </TextView>
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/menupopbutton"-->
+<!--            android:layout_weight="0"-->
+<!--            android:src="@drawable/ic_baseline_more_vert_24"-->
+<!--            >-->
+
+<!--        </ImageView>-->
+
+
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,12 +56,13 @@
 
     <TextView
         android:background="@drawable/rounded_corner"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="#3000B0FF"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:id="@+id/note_timestamp_text_view"
         android:text="note title"
+        android:textColor="@color/gray"
         android:textSize="12sp"
         android:gravity="right"
         android:layout_marginVertical="4dp"/>

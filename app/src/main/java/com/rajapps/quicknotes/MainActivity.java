@@ -1,32 +1,57 @@
 package com.rajapps.quicknotes;
 
+import static java.time.LocalDateTime.now;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.rajapps.quicknotes.ads.Admob;
 import com.rajapps.quicknotes.ads.AdsUnit;
 import com.rajapps.quicknotes.ads.OnDismiss;
 import com.rajapps.quicknotes.ads.Pref;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     NoteAdapter noteAdapter;
 
     InterstitialAd mInterstitialAd;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +107,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//.....
 
-        menuBtn.setOnClickListener((v)->showMenu() );
+        menuBtn.setOnClickListener((v)->showMenu());
         setupRecyclerView();
 
         //banner ads
@@ -92,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
     }//.......................................
 
+// laoding interstitiasl ad
     private void loadInter() {
         AdRequest adRequest = new AdRequest.Builder().build();
 
@@ -119,12 +146,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+// logout btn function
     void showMenu(){
-        PopupMenu popupMenu  = new PopupMenu(MainActivity.this,menuBtn);
-        popupMenu.getMenu().add("Logout");
-        popupMenu.show();
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        PopupMenu popupMenu2 = new PopupMenu(MainActivity.this,menuBtn);
+        popupMenu2.getMenu().add("Logout");
+        popupMenu2.show();
+        popupMenu2.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if(menuItem.getTitle()=="Logout"){
@@ -138,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     void setupRecyclerView(){
         Query query  = Utility.getCollectionReferenceForNotes().orderBy("timestamp",Query.Direction.DESCENDING);

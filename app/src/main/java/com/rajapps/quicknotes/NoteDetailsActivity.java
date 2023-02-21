@@ -41,6 +41,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         content= getIntent().getStringExtra("content");
         docId = getIntent().getStringExtra("docId");
 
+        // used to check the user click on add note button or on the display note
         if(docId!=null && !docId.isEmpty()){
             isEditMode = true;
         }
