@@ -4,8 +4,12 @@ import static java.time.LocalDateTime.now;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +19,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,6 +42,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -53,7 +59,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    //................navigation
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
+    //................
 
     FloatingActionButton addNoteBtn;
     RecyclerView recyclerView;
@@ -70,8 +82,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Admob.setBanner(findViewById(R.id.banner_main),MainActivity.this); // banner ads
+       // nav
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
+        setSupportActionBar(toolbar);
+
 
         addNoteBtn = findViewById(R.id.add_note_btn);
         recyclerView = findViewById(R.id.recyler_view);
@@ -116,7 +134,18 @@ public class MainActivity extends AppCompatActivity {
         Admob.loadAds(banner, MainActivity.this);
         loadInter();
 
-    }//.......................................
+        //.....................navigation drawer
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new
+                ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
+
+
+    }//.......................................................................
 
 // laoding interstitiasl ad
     private void loadInter() {
@@ -193,4 +222,64 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         noteAdapter.notifyDataSetChanged();
     }
+
+    // onbackpressed for navigation
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+                break;
+            case R.id.create_note:
+                Intent intent = new Intent(MainActivity.this,NoteDetailsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_rate:
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
+                            getPackageName())));
+                    // google play
+
+                } catch (Exception ex) {
+                    startActivity(new
+                            Intent(Intent.ACTION_VIEW,Uri.parse("http://play.google.com/store/apps/details?id=" +
+                            getPackageName())));
+                    // website google play
+
+                }
+
+                break;
+
+
+            case R.id.nav_share:
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody = "Share Quick Notes app with your friends and colleagues! With Quick Notes , you can quickly \ncapture and organize your notes, to-do lists, and ideas on the go. Whether you're a student,\n professional, or just someone who likes to stay organized, Quick Notes app has got you covered.\n Download now and start taking notes like a pro!\n" + "https://www.amazon.com/gp/product/B0BVWF2HL3";
+
+                String shareSub = "Best App for organizing your Notes";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(myIntent, "Share using"));
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
+
+
+
 }

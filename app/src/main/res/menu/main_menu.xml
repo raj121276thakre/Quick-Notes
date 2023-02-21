@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/home_icon"/>
+
+        <item
+            android:id="@+id/create_note"
+            android:title="create note"
+            android:icon="@drawable/ic_baseline_add_24" />
+
+
+    </group>
+
+    <item android:title="communication">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+            <item
+
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/rate"
+                android:title="rate" />
+
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/share"
+                android:title="share" />
+
+            </group>
+
+
+        </menu>
+
+    </item>
+
+
+</menu>
