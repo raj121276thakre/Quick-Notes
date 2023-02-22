@@ -32,6 +32,18 @@
                 android:icon="@drawable/share"
                 android:title="share" />
 
+                <item
+
+                    android:id="@+id/privacy"
+                    android:icon="@drawable/privacy_icon"
+                    android:title="Privacy Policy" />
+
+                <item
+                    android:id="@+id/terms"
+                    android:icon="@drawable/terms_icon"
+                    android:title="@string/terms_conditions" />
+
+
             </group>
 
 

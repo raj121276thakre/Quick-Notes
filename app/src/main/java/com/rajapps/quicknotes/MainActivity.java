@@ -246,6 +246,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
 
+
+            case R.id.privacy:
+                Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://doc-hosting.flycricket.io/quick-notes-privacy-policy/8ec2535c-e407-4649-baba-18ab2d65a282/privacy"));
+                startActivity(intent1);
+                break;
+                 // privacy  website flycricket
+
+            case R.id.terms:
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://doc-hosting.flycricket.io/quick-notes-terms-of-use/820b25ea-b110-472f-b108-a1d14cd30241/terms"));
+                startActivity(intent2);
+                break;
+            // terms and conditions  website flycricket
+
             case R.id.nav_rate:
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
